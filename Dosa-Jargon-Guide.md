@@ -15,3 +15,11 @@ A namePrefix (sometimes called a prefix) is a constant in your application. It c
 ## entity
 
 An entity is a representation of a persisted table.
+
+## client interface
+
+TODO: Describe what this is
+
+## connector interface
+
+TODO: Describe what this is
