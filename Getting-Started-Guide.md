@@ -20,13 +20,13 @@ The `dosa` binary should now be installed in `$GOPATH/bin`.
 
     ls -l $GOPATH/bin/dosa
 
-### Start Cerberus to proxy to `dosa-gateway`
+### TODO: Start standalone gateway
 
-    cerberus -t dosa-gateway --dc sjc1
+    make start-gateway
 
 ### Create your DOSA development scope
 
-    dosa scope create your_name_here
+    dosa scope create <scope_name>
 
 ## Build your data model
 
