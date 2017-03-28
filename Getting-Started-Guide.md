@@ -14,8 +14,6 @@ Starting in the base directory of your sources:
 
 ### Install the DOSA CLI
 
-This is a hack for the time being, ideally the command above would install `dosa` into $GOPATH/bin
-
     go get -u github.com/uber-go/dosa/cmd/dosa
 
 The `dosa` binary should now be installed in `$GOPATH/bin`.
