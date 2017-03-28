@@ -1,20 +1,30 @@
-# DOSA v2 Getting Started (wip)
+# DOSA v2 Getting Started
 
 ## Setup
 
+### Create a basic go project
+
+### Make sure glide and $GOPATH/bin are on your PATH
+
+Starting in the base directory of your sources:
+
+    PATH=$PWD/go-build:$GOPATH/bin:$PATH
+
 ### Install DOSA Client library
 
-    ./go-build/glide get github.com/uber-go/dosa
+    glide get github.com/uber-go/dosa
 
-### Install the DOSA CLI (this is a hack for the time being, ideally the command above would install `dosa` into $GOPATH/bin)
+### Install the DOSA CLI
+
+This is a hack for the time being, ideally the command above would install `dosa` into $GOPATH/bin
 
     cd vendor/github.com/uber-go/dosa
     glide install
     make cli
 
-The `dosa` binary should now be installed in `$GOPATH/bin`. If this isn't already in your $PATH, you may want to add it:
+The `dosa` binary should now be installed in `$GOPATH/bin`.
 
-    export PATH=$GOPATH/bin:$PATH
+    ls -l $GOPATH/bin/dosa
 
 ### Start Cerberus to proxy to `dosa-gateway`
 
@@ -25,6 +35,8 @@ The `dosa` binary should now be installed in `$GOPATH/bin`. If this isn't alread
     dosa scope create eculver
 
 ## Build your data model
+
+Modeling your data is beyond the scope of this quick start guide. Please reach out to us for help!
 
 ### Create at least one entity
 
