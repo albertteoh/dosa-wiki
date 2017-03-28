@@ -57,15 +57,15 @@ a clustering key of `K3`. There is a single non-key field, `C1`.
 
 ### Dump your schema definitions
 
-Do this to check for errors in your entities, use the CLI's `schema dump` command:
+Do this to check for errors in your entities, use the CLI's `schema dump` command, `prefix` is required:
 
-    dosa schema dump
+    dosa schema dump --prefix uber.dosa.example
 
 This command takes an optional list of directories to look for entities. If none are provided, it will default to the current directory. Since the example assumes entities are defined in `./entities.go`, no arguments are needed.
 
-### Install your schema with the `schema upsert` command:
+### Install your schema with the `schema upsert` command, `prefix` is required:
 
-    dosa schema upsert
+    dosa schema upsert --prefix uber.dosa.example
 
 This will translate your DOSA entities into the associated database schema. If the underlying datastore is Cassandra, this will translate to CQL. For a preview of the schema that will be installed, use the `schema dump` command can again be used. In this case, to preview the CQL pass the `format` option:
 
