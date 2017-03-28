@@ -28,7 +28,8 @@ The `dosa` binary should now be installed in `$GOPATH/bin`. If this isn't alread
 
 ### Create at least one entity
 
-    In your code, create an object that extends a dosa.Entity, like this:
+In your code, create an object that extends a dosa.Entity, like this:
+
     import "github.com/uber-go/dosa"
     type MyFirstDosaObject struct {
         dosa.Entity `dosa:"primaryKey=((K1, K2), K3)"`
@@ -38,16 +39,18 @@ The `dosa` binary should now be installed in `$GOPATH/bin`. If this isn't alread
         C1 time.Time
     }
 
-    This example described a table with a partition key of (K1, K2) and
-    a clustering key of K3. There is a single non-key field, C1.
+This example described a table with a partition key of (K1, K2) and
+a clustering key of K3. There is a single non-key field, C1.
 
-## Dump your schema definitions
+### Dump your schema definitions
 
-    # do this to check for errors in your entities
+Do this to check for errors in your entities
+
     dosa schema dump _sourcedir_
-    # if you leave off _sourcedir_, it will scan the current directory only
 
-## Upload your schema to the server
+If you leave off _sourcedir_, it will scan the current directory only
+
+### Upload your schema to the server
 
     dosa schema upsert _sourcedir_
 
