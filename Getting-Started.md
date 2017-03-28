@@ -46,13 +46,13 @@ a clustering key of K3. There is a single non-key field, C1.
 
 Do this to check for errors in your entities
 
-    dosa schema dump _sourcedir_
+    dosa schema dump directory_where_your_entity_sources_are
 
-If you leave off _sourcedir_, it will scan the current directory only
+If you leave off directory_where_your_entity_sources_are, it will scan the current directory only
 
 ### Upload your schema to the server
 
-    dosa schema upsert _sourcedir_
+    dosa schema upsert directory_where_your_entity_sources_are
 
 ## TODO: Initialize client
 ## TODO: Create/query data
