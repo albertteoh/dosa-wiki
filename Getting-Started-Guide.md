@@ -73,6 +73,7 @@ This will translate your DOSA entities into the associated database schema. If t
 
     dosa schema dump --format cql
 
+    create table "myfirstdosaobject" ("k1" uuid, "k2" text, "k3" bigint, "c1" timestamp, primary key ((k1, k2), k3 ASC));
 
 ## TODO: Initialize client
 ## TODO: Create/query data
