@@ -54,7 +54,7 @@ In your code, create an object that embeds `(github.com/uber-go/dosa).Entity`, w
         C1 time.Time
     }
 
-This example described an object with a partitioning key of `(K1, K2)` and
+This example describes an object with a partitioning key of `(K1, K2)` and
 a clustering key of `K3`. There is a single non-key field, `C1`.
 
 ### Dump your schema definitions
