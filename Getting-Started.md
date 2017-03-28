@@ -8,7 +8,7 @@
 
 Starting in the base directory of your sources:
 
-    PATH=$PWD/go-build:$GOPATH/bin:$PATH
+    export PATH="$PWD/go-build:$GOPATH/bin:$PATH"
 
 ### Install DOSA Client library
 
@@ -32,7 +32,7 @@ The `dosa` binary should now be installed in `$GOPATH/bin`.
 
 ### Create your DOSA development scope
 
-    dosa scope create eculver
+    dosa scope create your_name_here
 
 ## Build your data model
 
