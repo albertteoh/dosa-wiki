@@ -1,5 +1,3 @@
-# DOSA v2 Getting Started
-
 ## Setup
 
 ### Create a basic go project
