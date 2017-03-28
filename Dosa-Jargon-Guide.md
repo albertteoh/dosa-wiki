@@ -11,3 +11,7 @@ Scopes can be created or destroyed with the dosa command line tool. The producti
 ## namePrefix
 
 A namePrefix (sometimes called a prefix) is a constant in your application. It can be set to your service name, for example.
+
+## entity
+
+An entity is a representation of a persisted table.
