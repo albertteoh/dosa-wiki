@@ -46,9 +46,9 @@ Create main.go as follows:
 package main
 
     import (
-	"context"
-	"github.com/uber-go/dosa"
-	_ "github.com/uber-go/dosa/connectors/cassandra"
+        "context"
+        "github.com/uber-go/dosa"
+        _ "github.com/uber-go/dosa/connectors/cassandra"
     )
 
     func main() {
@@ -95,6 +95,8 @@ Do this to check for errors in your entities, use the CLI's `schema dump` comman
 This command takes an optional list of directories to look for entities. If none are provided, it will default to the current directory. Since the example assumes entities are defined in `./entities.go`, no arguments are needed.
 
 ### Install your schema into a cassandra instance
+
+This assumes you already have Cassandra running on your local machine.
 
     echo "create keyspace dosakeyspace with replication = { 'class': 'SimpleStrategy', 'replication_factor': 1 };" | cqlsh
     dosa schema dump | cqlsh
