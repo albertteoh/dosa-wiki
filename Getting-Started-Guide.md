@@ -2,35 +2,19 @@
 
 ### Create a basic go project
 
+    export GOPATH=$HOME/dosa-sample
+    mkdir -p $GOPATH/src/dosa-sample
+    cd $GOPATH/src/dosa-sample
+
+### Install glide
+
+If you don't already have it, see https://github.com/Masterminds/glide/blob/master/README.md#install for specific instructions.
+
 ### Make sure `glide` and `$GOPATH/bin` are in your `$PATH`:
 
 Starting in the base directory of your sources:
 
     export PATH="$PATH:$GOPATH/bin"
-
-### Install the DOSA library
-
-    glide get github.com/uber-go/dosa
-
-### Install the DOSA CLI
-
-    go get -u github.com/uber-go/dosa/cmd/dosa
-
-The `dosa` binary should now be installed in `$GOPATH/bin`.
-
-    ls -l $GOPATH/bin/dosa
-
-### TODO: Start standalone gateway
-
-    make start-gateway
-
-### Create your DOSA development scope
-
-    dosa scope create <scope_name>
-
-## Build your data model
-
-Modeling your data is beyond the scope of this quick start guide. Please reach out to us for help!
 
 ### Create at least one entity
 
@@ -55,23 +39,76 @@ In your code, create an object that embeds `(github.com/uber-go/dosa).Entity`, w
 This example describes an object with a partitioning key of `(K1, K2)` and
 a clustering key of `K3`. There is a single non-key field, `C1`.
 
+## Initialize client
+
+Create main.go as follows:
+
+package main
+
+    import (
+	"context"
+	"github.com/uber-go/dosa"
+	_ "github.com/uber-go/dosa/connectors/cassandra"
+    )
+
+    func main() {
+        registry, err := dosa.NewRegistrar("dosakeyspace", "appname", &MyFirstDosaObject{})
+        if err != nil {
+                panic(err.Error())
+        }
+        connector, err := dosa.GetConnector("cassandra", nil)
+        if err != nil {
+                panic(err.Error())
+        }
+        client := dosa.NewClient(registry, connector)
+        if err := client.Initialize(context.TODO()); err != nil {
+                panic(err.Error())
+        }
+        if err := client.Upsert(context.TODO(), dosa.All(), &MyFirstDosaObject{K1: dosa.NewUUID(), K2: "testdata", K3: 1, C1: time.Now()}); err != nil {
+                panic(err.Error())
+        }
+    }
+
+### Install the DOSA library
+
+    glide init
+
+### Install the DOSA CLI
+
+    go get -u github.com/uber-go/dosa/cmd/dosa
+
+The `dosa` binary should now be installed in `$GOPATH/bin`.
+
+    ls -l $GOPATH/bin/dosa
+
+## Get all the dependencies
+
+    glide install
+    go build
+
 ### Dump your schema definitions
 
 Do this to check for errors in your entities, use the CLI's `schema dump` command, `prefix` is required:
 
-    dosa schema dump --prefix uber.dosa.example
+    dosa schema dump
 
 This command takes an optional list of directories to look for entities. If none are provided, it will default to the current directory. Since the example assumes entities are defined in `./entities.go`, no arguments are needed.
 
-### Install your schema with the `schema upsert` command, `prefix` is required:
+### Install your schema into a cassandra instance
 
-    dosa schema upsert --prefix uber.dosa.example
+    echo "create keyspace dosakeyspace with replication = { 'class': 'SimpleStrategy', 'replication_factor': 1 };" | cqlsh
+    dosa schema dump | cqlsh
 
-This will translate your DOSA entities into the associated database schema. If the underlying datastore is Cassandra, this will translate to CQL. For a preview of the schema that will be installed, use the `schema dump` command can again be used. In this case, to preview the CQL pass the `format` option:
+### Run the app
 
-    dosa schema dump --format cql
+Now just build and run the app like this:
 
-    create table "myfirstdosaobject" ("k1" uuid, "k2" text, "k3" bigint, "c1" timestamp, primary key ((k1, k2), k3 ASC));
+    go build
+    ./dosa-sample
 
-## TODO: Initialize client
-## TODO: Create/query data
+If it worked, you'll find a row in the Cassandra database:
+
+    echo 'select * from dosakeyspace.myfirstdosaobject;' | cqlsh
+     k1                                   | k2       | k3 | c1
+    --------------------------------------+----------+----+---------------------------------
+     b68281f9-4096-4e23-9359-a3b28ebc026e | testdata |  1 | 2017-09-27 10:44:12.799000+0000
