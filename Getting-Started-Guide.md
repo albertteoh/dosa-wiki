@@ -43,7 +43,7 @@ a clustering key of `K3`. There is a single non-key field, `C1`.
 
 Create main.go as follows:
 
-package main
+    package main
 
     import (
         "context"
